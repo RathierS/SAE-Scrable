@@ -19,6 +19,16 @@ public class Plateau {
                 { 5, 1, 1, 2, 1, 1, 1, 5, 1, 1, 1, 2, 1, 1, 5 } };
 
     }
+    public String toString(){
+    for (int i = 0; i < g.length; i++) {
+        plateauCourant += (" " + col + " |");
+        for (int j = 0; j < g[0].length; j++) {
+            if (g[i][j].getCouleur() == 1) {
+            if (g[i][j].getCouleur() == 1 && !g[i][j].estRecouverte()) {
+                plateauCourant += "   |";
+            } else {
+                plateauCourant += " " + g[i][j].toString() + " |";
+            }
 
     /**
      * résultat : chaîne décrivant ce Plateau
@@ -33,28 +43,28 @@ public class Plateau {
     // Indique les indices des lignes mais pas des colonnes.
     // il manque à mettre les indices des colonnes, mettre
     // la lettre majuscule quana la lettre est recouverte
-    public static void affichage(int[][] mat) {
-        for (int i = 0; i < 15; i++) {
-            if (i < 9) {
-                Ut.afficher(" " + "0" + (i + 1) + "  :  ");
-            } else {
+    // public static void affichage(int[][] mat) {
+    //     for (int i = 0; i < 15; i++) {
+    //         if (i < 9) {
+    //             Ut.afficher(" " + "0" + (i + 1) + "  :  ");
+    //         } else {
 
-                Ut.afficher(" " + (i + 1) + "  :  ");
-            }
+    //             Ut.afficher(" " + (i + 1) + "  :  ");
+    //         }
 
-            for (int j = 0; j < 15; j++) {
+    //         for (int j = 0; j < 15; j++) {
 
-                if (mat[i][j] != 1) {
-                    Ut.afficher(mat[i][j] + "_|");
-                    // Ut.afficher(mat);
-                } else {
-                    Ut.afficher(" " + "_|");
-                }
-            }
-            System.out.println("");
+    //             if (mat[i][j] != 1) {
+    //                 Ut.afficher(mat[i][j] + "_|");
+    //                 // Ut.afficher(mat);
+    //             } else {
+    //                 Ut.afficher(" " + "_|");
+    //             }
+    //         }
+    //         System.out.println("");
 
-        }
-    }
+    //     }
+    // }
 
     // Autres méthodes permettant de placer un mot proposé pat un joueur.
     // le mot est un String
