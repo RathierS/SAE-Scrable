@@ -43,6 +43,7 @@ public class Plateau {
     // Indique les indices des lignes mais pas des colonnes.
     // il manque à mettre les indices des colonnes, mettre
     // la lettre majuscule quana la lettre est recouverte
+    
     // public static void affichage(int[][] mat) {
     //     for (int i = 0; i < 15; i++) {
     //         if (i < 9) {
