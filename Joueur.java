@@ -32,6 +32,8 @@ public class Joueur {
      * suggestion : bien relire la classe MEE !
      */
     public int nbPointsChevalet(int[] nbPointsJet) {
+        int pointTotal = this.chevalet.sommeValeurs(nbPointsJet);
+        return pointTotal;
     }
 
     /**
