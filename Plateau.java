@@ -1,3 +1,5 @@
+import javax.swing.event.MouseInputListener;
+
 public class Plateau {
     private Case[][] g = new Case[15][15];
 
@@ -87,24 +89,49 @@ public class Plateau {
     public int nbPointsPlacement(String mot, int numLig, int numCol, char sens,
             int[] nbPointsJet) {
         int somme = 0;
+        int newsomme = 0;
+        int mult = 1;
         if (sens == 'h') {
             for (int i = 0; i < mot.length(); i++) {
                 if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) {
                     somme = somme + nbPointsJet[Ut.majToIndex(mot.charAt(i))];
                 } else {
-                    somme = somme + nbPointsJet[Ut.majToIndex(mot.charAt(i))] * g[numLig][numCol].getCouleur();
+                    somme = somme + nbPointsJet[Ut.majToIndex(mot.charAt(i))] *
+                            g[numLig][numCol].getCouleur();
+                }
+
+                // dans le cas la case est 4 ou 5
+                if (g[numLig][numCol].getCouleur() == 4) {
+                    mult = 2;
+                }
+                if (g[numLig][numCol].getCouleur() == 5) {
+                    mult = 3;
                 }
                 numCol++;
             }
-            // dans le cas
-            if (g[numLig][numCol].getCouleur() == 4) {
-                somme = somme * 2;
-            }
-            if (g[numLig][numCol].getCouleur() == 5) {
-                somme = somme * 3;
+        }
+        newsomme = somme * mult;
+
+        if (sens == 'v') {
+            for (int i = 0; i < mot.length(); i++) {
+                if (g[numCol][numLig].getCouleur() == 4 || g[numCol][numLig].getCouleur() == 5) {
+                    somme = somme + nbPointsJet[Ut.majToIndex(mot.charAt(i))];
+                } else {
+                    somme = somme + nbPointsJet[Ut.majToIndex(mot.charAt(i))] * g[numCol][numLig].getCouleur();
+                }
+
+                // dans le cas la case est 4 ou 5
+                if (g[numCol][numLig].getCouleur() == 4) {
+                    mult = 2;
+                }
+                if (g[numCol][numLig].getCouleur() == 5) {
+                    mult = 3;
+                }
+                numLig++;
             }
         }
-        return somme;
+        newsomme = somme * mult;
+        return newsomme;
     }
 
     /**
@@ -114,7 +141,28 @@ public class Plateau {
      * action/résultat : effectue ce placement et retourne le
      * nombre de jetons retirés de e.
      */
-    // public int place(String mot, int numLig, int numCol, char sens, MEE e){}
+    public int place(String mot, int numLig, int numCol, char sens, MEE e) {
+        int nbJetonRetire = 0;
+
+        if (sens == 'h') {
+            for (int i = 0; i < mot.length(); i++) {
+                g[numLig][numCol].setLettre(mot.charAt(i));
+                numCol++;
+                e.retire(Ut.majToIndex(mot.charAt(i)));
+                nbJetonRetire++;
+
+            }
+        }
+        if (sens == 'h') {
+            for (int i = 0; i < mot.length(); i++) {
+                g[numCol][numLig].setLettre(mot.charAt(i));
+                numLig++;
+                e.retire(Ut.majToIndex(mot.charAt(i)));
+                nbJetonRetire++;
+            }
+        }
+        return nbJetonRetire;
+    }
 
     public static void main(String[] args) {
 
@@ -122,9 +170,9 @@ public class Plateau {
         Plateau plateau = new Plateau();
         // Ut.afficher(plateau.toString());
         int[] nbPointsJet = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10, 10, 10 };
-        // Ut.afficher(plateau.nbPointsPlacement("HEY", 5, 0, 'h', nbPointsJet)); ->
-        // resultat 17
-        Ut.afficher(plateau.nbPointsPlacement("HEY", 5, 0, 'h', nbPointsJet));
+        // Ut.afficher(plateau.nbPointsPlacement("HEY", 0, 0, 'v', nbPointsJet));
+        Ut.afficher(plateau.nbPointsPlacement("ABCDEFGH", 4, 1, 'v', nbPointsJet));
+        // plateau.nbPointsPlacement(mot, numLig, numCol, sens, nbPointsJet)
     }
 
 }

@@ -6,7 +6,7 @@ public class MEE {
     private int nbTotEx; // nombre total d'exemplaire
 
     public int getnbTotEx() {
-        return nbTotEx;
+        return this.nbTotEx;
     }
 
     /**
@@ -64,14 +64,9 @@ public class MEE {
     }
 
     /**
-     * affiche les tableau sous la forme :
+     * affiche le tableau sous la forme :
      * {4, 7, 9, ....}
      */
-
-    // toString n'est pas marqué dans les consignes doncil faudra peut être
-    // l'enlever à la fin
-    // Il y a un toString dans la classe Case mais il n'y a pas marqué à quoi il
-    // sert
     public String toString() {
         String res = "{";
         for (int j = 0; j < nbTotEx; j++) {
@@ -89,9 +84,12 @@ public class MEE {
 
     public boolean retire(int i) {
         boolean res = false;
-        if (this.tabFreq[i] >= 1) {
-            this.tabFreq[i] -= 1; // this.tabFreq[i - 1]
-            res = true;
+        for (int j = 0; j < this.nbTotEx; j++) {
+            if (this.tabFreq[j] == i) {
+                this.tabFreq[j] -= 1;
+                this.nbTotEx -= 1;
+                res = true;
+            }
         }
         return res;
     }
@@ -102,8 +100,7 @@ public class MEE {
      * et le retourne
      */
 
-    public int retireAleat() { // regarder si il faut rajouter des lignes pour savoir si il est possible de
-                               // retirer la valeur, cad si pour la valeur de i choisi aléatoirement tab[i] > 0
+    public int retireAleat() {
         int i = Ut.randomMinMax(0, this.tabFreq.length - 1);
         retire(i);
         return this.tabFreq[i];
@@ -117,11 +114,12 @@ public class MEE {
 
     public boolean transfere(MEE e, int i) {
         boolean res = false;
-        if (this.tabFreq[i] >= 1) {
-            this.tabFreq[i] = e.tabFreq[i]; // pourquoi ?
-            // this.ajoute(i);
-            // e.retire(i);
-            res = true;
+        for (int j = 0; j < tabFreq.length; j++) {
+            if (this.tabFreq[j] == i) {
+                this.retire(i);
+                e.ajoute(i);
+                res = true;
+            }
         }
         return res;
 
@@ -138,13 +136,12 @@ public class MEE {
         int nb_exmplaire = 0;
         int random = Ut.randomMinMax(0, this.tabFreq.length - 1);
         for (int i = 0; i < k; i++) {
-            if (retire(random) == true) { // peut être if (transfert(e, rendom) == true)
+            if (retire(random) == true) {
                 transfere(e, random);
                 nb_exmplaire++;
             }
         }
         return nb_exmplaire;
-        // j'ai modifié des choses
     }
 
     /**
@@ -156,15 +153,11 @@ public class MEE {
 
     public int sommeValeurs(int[] v) {
         int sommes = 0;
-        for (int i = 0; i < v.length; i++) {
-            sommes = v[i] + sommes;
+        for (int i = 0; i < this.tabFreq.length; i++) {
+            sommes = v[i] * tabFreq[i] + sommes;
         }
         return sommes;
-        // Pas compris et les autres ont fait une multiplication
 
-    }
-
-    public static void main(String[] args) {
     }
 
 }

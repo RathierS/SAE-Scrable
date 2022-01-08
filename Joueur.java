@@ -1,20 +1,21 @@
 public class Joueur {
     private String nom;
-    private MEE checalet;
+    private MEE chevalet;
     private int score;
 
     // Un constructeur
     public Joueur(String unNom) {
         this.nom = unNom;
-        // this.chevalet ?
+        this.chevalet = new MEE(26);
         this.score = 0; // ?
     }
 
     // méthode permettant l'affichage
     public String toString() {
+        return "Le joueur " + this.nom + " a un score de : " + this.score;
     }
 
-    // un accesseur en lecteur de l'attribut score ?
+    // un accesseur en lecteur de l'attribut score
     public int getscore() {
         return score;
     }
