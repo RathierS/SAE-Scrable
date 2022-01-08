@@ -1,6 +1,10 @@
 public class Plateau {
-    private Case[][] g; // g pour grille
+    private Case[][] g = new Case[15][15];
 
+    /**
+     * Constructeur default du plateau, à partir de la matrice standard selon les
+     * règles.
+     */
     public Plateau() {
         int[][] plateau = { { 5, 1, 1, 2, 1, 1, 1, 5, 1, 1, 1, 2, 1, 1, 5 },
                 { 1, 4, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 4, 1 },
@@ -18,49 +22,44 @@ public class Plateau {
                 { 1, 4, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 4, 1 },
                 { 5, 1, 1, 2, 1, 1, 1, 5, 1, 1, 1, 2, 1, 1, 5 } };
 
+        for (int i = 0; i < plateau.length; i++) {
+            for (int j = 0; j < plateau[0].length; j++) {
+                this.g[i][j] = new Case(plateau[i][j]);
+            }
+        }
+    }
+
+    /**
+     * Constructeur de plateau à partir d'une grille passée en paramètre
+     */
+    public Plateau(Case[][] plateau) {
+        this.g = plateau;
     }
 
     /**
      * résultat : chaîne décrivant ce Plateau
      */
 
-    // public String toString() {
-    // }
+    public String toString() {
+        String res = "";
+        String[] liste = { "01 02 03 04 05 06 07 08 09 10 11 12 13 14 15   ", "01", "02", "03", "04", "05", "06", "07",
+                "08", "09", "10", "11", "12", "13", "14", "15" };
+        for (int i = 0; i < 15; i++) {
+            res = res + liste[i] + "\n";
 
-    // permet d'afficher la grille avec les num qui correspond au code couleur
-    // des cases et laissa vide sur la casse est grise cad si le code coleur est de
-    // 1
-    // Indique les indices des lignes mais pas des colonnes.
-    // il manque à mettre les indices des colonnes, mettre
-    // la lettre majuscule quana la lettre est recouverte
+            for (int j = 0; j < g[0].length; j++) {
 
-    // public static void affichage(int[][] mat) {
-    // for (int i = 0; i < 15; i++) {
-    // if (i < 9) {
-    // Ut.afficher(" " + "0" + (i + 1) + " : ");
-    // } else {
+                if (g[i][j].getCouleur() > 1) {
+                    res = res + g[i][j].getCouleur() + "_|";
+                    // Ut.afficher(mat);
+                } else {
+                    res = res + " " + "_|";
+                }
+            }
 
-    // Ut.afficher(" " + (i + 1) + " : ");
-    // }
-
-    // for (int j = 0; j < 15; j++) {
-
-    // if (mat[i][j] != 1) {
-    // Ut.afficher(mat[i][j] + "_|");
-    // // Ut.afficher(mat);
-    // } else {
-    // Ut.afficher(" " + "_|");
-    // }
-    // }
-    // System.out.println("");
-
-    // }
-    // }
-
-    // Autres méthodes permettant de placer un mot proposé pat un joueur.
-    // le mot est un String
-    // coordonées de la case contenant la première lettre
-    // le sens du mot (vertical v ou hrizontal h )
+        }
+        return res;
+    }
 
     /**
      * pré-requis : mot est un mot accepté par CapeloDico,
@@ -71,14 +70,10 @@ public class Plateau {
      * des jetons de e est valide.
      */
 
-    /*
-     * public boolean placementValide(String mot, int numLig, int numCol,char sens,
-     * MEE e) {
-     * boolean res = true;
-     * if (mot == ){
-     * }
-     * }
-     */
+    // public boolean placementValide(String mot, int numLig, int numCol, char sens,
+    // MEE e) {
+
+    // }
 
     // Méthode de comptabilité des points
 
@@ -88,10 +83,29 @@ public class Plateau {
      * résultat : retourne le nombre de points rapportés par ce placement, le
      * nombre de points de chaque jeton étant donné par le tableau nbPointsJet.
      */
-    // public int nbPointsPlacement(String mot, int numLig, int numCol,char sens,
-    // int[] nbPointsJet) {
 
-    // }
+    public int nbPointsPlacement(String mot, int numLig, int numCol, char sens,
+            int[] nbPointsJet) {
+        int somme = 0;
+        if (sens == 'h') {
+            for (int i = 0; i < mot.length(); i++) {
+                if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) {
+                    somme = somme + nbPointsJet[Ut.majToIndex(mot.charAt(i))];
+                } else {
+                    somme = somme + nbPointsJet[Ut.majToIndex(mot.charAt(i))] * g[numLig][numCol].getCouleur();
+                }
+                numCol++;
+            }
+            // dans le cas
+            if (g[numLig][numCol].getCouleur() == 4) {
+                somme = somme * 2;
+            }
+            if (g[numLig][numCol].getCouleur() == 5) {
+                somme = somme * 3;
+            }
+        }
+        return somme;
+    }
 
     /**
      * pré-requis : le placement de mot sur this à partir de la case
@@ -105,6 +119,12 @@ public class Plateau {
     public static void main(String[] args) {
 
         // prblème avec int[][] plateau;
+        Plateau plateau = new Plateau();
+        // Ut.afficher(plateau.toString());
+        int[] nbPointsJet = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10, 10, 10 };
+        // Ut.afficher(plateau.nbPointsPlacement("HEY", 5, 0, 'h', nbPointsJet)); ->
+        // resultat 17
+        Ut.afficher(plateau.nbPointsPlacement("HEY", 5, 0, 'h', nbPointsJet));
     }
 
 }
