@@ -67,7 +67,7 @@ public class Joueur {
             int nbJetonEchanger = Ut.saisirEntier();
             this.chevalet.retire(nbJetonEchanger);
             s.ajoute(nbJetonEchanger);
-            res = 0;
+            s.echangeJetons res = 0;
         } else if (this.chevalet.estVide()) {
             res = 1;
         } else if (choix == 'J') {
@@ -132,6 +132,16 @@ public class Joueur {
      * stratégie : appelle les méthodes estCorrectPourEchange et echangeJetonsAux
      */
     public void echangeJetons(MEE sac) {
+        Ut.afficher("Entrez les lettres à échanger");
+        String motSaisis = Ut.saisirChaine();
+        if (this.estCorrectPourEchange(motSaisis)) {
+            echangeJetonsAux(sac, motSaisis);
+        } else {
+            while (!this.estCorrectPourEchange(motSaisis)) {
+                Ut.afficher("Invalide \n Entrez les lettres à échanger");
+                motSaisis = Ut.saisirChaine();
+            }
+        }
     }
 
     /**
@@ -141,9 +151,11 @@ public class Joueur {
      */
     public boolean estCorrectPourEchange(String mot) {
         boolean res = false;
+        int[] tab = new int[mot.length()]; 
+        MEE EnsembleMot = new MEE(tab);
         for(int i = 0; i<mot.length();i++){
-        if(!Ut.estUneMajuscule(mot.charAt(i))){
-            mot.charAt(i)== chevalet.getTabFreq()
+        if(!Ut.estUneMajuscule(mot.charAt(i)) && tab[]){
+            
             
         }
         }
@@ -156,6 +168,11 @@ public class Joueur {
      * jetons du sac tirés aléatoirement.
      */
     public void echangeJetonsAux(MEE sac, String ensJetons) {
+        for (int i = 0; i < ensJetons.length(); i++) {
+            int caractères = Ut.majToIndex(ensJetons.charAt(i));
+            this.chevalet.transfere(sac, caractères);
+            sac.transfereAleat(this.chevalet, i);
+        }
     }
 
 }
