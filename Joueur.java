@@ -67,10 +67,12 @@ public class Joueur {
             int nbJetonEchanger = Ut.saisirEntier();
             this.chevalet.retire(nbJetonEchanger);
             s.ajoute(nbJetonEchanger);
-            s.echangeJetons res = 0;
+            // s.echangeJetons res = 0;
         } else if (this.chevalet.estVide()) {
+            this.chevalet.transfere(s, 7);
             res = 1;
         } else if (choix == 'J') {
+            res = 0;
 
         } else {
             res = 0;
