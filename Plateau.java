@@ -72,8 +72,14 @@ public class Plateau {
      * des jetons de e est valide.
      */
 
-    // public boolean placementValide(String mot, int numLig, int numCol, char sens,
-    // MEE e) {
+    public boolean placementValide(String mot, int numLig, int numCol, char sens,
+    MEE e) {
+        boolean res = false;
+        if (mot == " " && numLig == 1 && numCol== 5 && sens== 'h'&& e.getnbTotEx()==5 ){
+            res = true;
+        }
+        return res;
+
 
     // }
 

@@ -9,6 +9,10 @@ public class MEE {
         return this.nbTotEx;
     }
 
+    public int[] getTabFreq() {
+        return tabFreq;
+    }
+
     /**
      * pré-requis : max >= 0*
      * action : crée un multi-ensemble vide dont les éléments seront
