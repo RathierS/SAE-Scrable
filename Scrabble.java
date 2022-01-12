@@ -38,6 +38,7 @@ public class Scrabble {
         // méthode partie orchestre une partie de Scrabble
 
         public void partie() {
+
                 for (int i = 0; i < this.joueurs.length; i++) {
                         for (int j = 0; j < 7; j++) {
                                 this.joueurs[i].prendJetons(this.sac, 1);
@@ -71,6 +72,7 @@ public class Scrabble {
 
                 }
                 Ut.afficher("Partie terminée");
+                
         }
 
 }
