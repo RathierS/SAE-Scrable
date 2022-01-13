@@ -29,5 +29,5 @@ Dans certain cas il est aussi possible d'aller dans son dossier et de taper **cm
 ## Notre nouvel objectif :
   
 Même si nous n'avons pas réussi à finir toutes les méthodes dans les temps, notre objectif est maintenant de continuer et de réussir à finir notre jeu de Scrabble afin de nous améliorer.
-  
+
 > La chute n'est pas un échec. L'échec, c'est de rester là où on est tombé. (Socrate de Constantinople).
