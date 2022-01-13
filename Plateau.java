@@ -159,7 +159,7 @@ public class Plateau {
 
             }
         }
-        if (sens == 'h') {
+        if (sens == 'v') {
             for (int i = 0; i < mot.length(); i++) {
                 g[numCol][numLig].setLettre(mot.charAt(i));
                 numLig++;
