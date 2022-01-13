@@ -34,6 +34,9 @@ public class Scrabble {
                 plateau.toString();
 
         }
+        public static void main(String[] args) {
+                
+        }
 
         // méthode partie orchestre une partie de Scrabble
 
